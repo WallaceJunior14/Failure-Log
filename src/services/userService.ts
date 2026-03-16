@@ -39,3 +39,16 @@ export const getUserByEmail = async (email: string) => {
 export const findAllUser = async () => {
     return await prisma.user.findMany();
 }
+
+export const updateUser = async (id: string, data: Partial<UserData>) => {
+    return prisma.user.update({
+        where: { id },
+        data
+    });
+};
+
+export const deleteUser = async (id: string) => {
+    return prisma.user.delete({
+        where: { id }
+    });
+};

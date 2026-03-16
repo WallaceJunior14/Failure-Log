@@ -29,4 +29,32 @@ export const showAllUser = async (_req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ success: false, error: 'Error fetching users'});
     }
-}
+};
+
+export const editUser = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id as string;
+        
+        const user = await userService.updateUser(id, req.body);
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        res.status(400).json({ 
+            success: false, 
+            error: error instanceof Error ? error.message : 'Error updating user' 
+        });
+    }
+};
+
+export const destroyUser = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id as string;
+
+        await userService.deleteUser(id);
+        res.status(200).json({ success: true, message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(400).json({ 
+            success: false, 
+            error: error instanceof Error ? error.message : 'Error deleting user' 
+        });
+    }
+};

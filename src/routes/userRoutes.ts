@@ -11,5 +11,8 @@ router.post('/login', userController.login);
 
 // Users
 router.get('/showAll', userController.showAllUser);
+router.put('/edit/:id', authMiddleware, validateUser, userController.editUser);
+router.delete('/destroy/:id', authMiddleware, userController.destroyUser)
+
 
 export const userRoutes = router;
