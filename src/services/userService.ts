@@ -20,9 +20,9 @@ export const createUser = async (userData: UserData) => {
 };
 
 export const loginUser = async (email: string, password: string) => {
-    const user = await prisma.user.findFirst({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
 
-    if (!user || !(await bcrypt.compare(password, user?.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
         throw new Error('Invalid Credentials');
     }
 
@@ -32,6 +32,10 @@ export const loginUser = async (email: string, password: string) => {
 export const getUserByEmail = async (email: string) => {
     return prisma.user.findFirst({
         where: { email },
-        select: { id: true, name: true, email: true, role: true }
+        select: { id: true, name: true, email: true }
     });
+}
+
+export const findAllUser = async () => {
+    return await prisma.user.findMany();
 }

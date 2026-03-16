@@ -15,8 +15,18 @@ export const login = async (req: Request, res: Response) => {
         const { email, password } = req.body;
         const token = await userService.loginUser(email, password);
         const user = await userService.getUserByEmail(email);
-        res.json({ token, user });
+        console.log(user)
+        res.status(200).json({ token, user });
     } catch (error) {
         res.status(401).json({ error: 'Invalid Credentials' });
     }
 };
+
+export const showAllUser = async (_req: Request, res: Response) => {
+    try {
+        const users = await userService.findAllUser();
+        res.status(200).json({ success: true, data: users });
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Error fetching users'});
+    }
+}
