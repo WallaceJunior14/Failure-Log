@@ -1,6 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import { userRoutes } from '../routes/userRoutes';
 
 const createApp = () => {
     const app = express();
@@ -10,6 +11,9 @@ const createApp = () => {
     app.use(cors());
     app.use(express.json());
     
+    // Routes 
+    app.use('/api/users', userRoutes)
+
     // Error Handling
     app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
         console.error(err);
